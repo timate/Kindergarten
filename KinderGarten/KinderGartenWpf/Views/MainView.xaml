@@ -1,0 +1,116 @@
+﻿<Page x:Class="KinderGartenWpf.Views.MainView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      UseLayoutRounding="True"
+      Title="MainView"
+      DataContext="{Binding MainVM,Source={StaticResource ViewModelLocator}}">
+
+    <StackPanel UseLayoutRounding="True">
+        <StackPanel.Resources>
+            <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
+        </StackPanel.Resources>
+        <TextBlock Text="Главная" Style="{StaticResource HeaderOne}" 
+                   Foreground="{StaticResource ForegroundBrush}"
+                   FontWeight="SemiBold"/>
+
+        <WrapPanel Orientation="Horizontal">
+            
+            <StackPanel Margin="5" Visibility="{Binding FinancesVisibility, Converter={StaticResource VisibilityConverter}}">
+                <TextBlock Style="{StaticResource HeaderTwo}" Foreground="{StaticResource ForegroundBrush}"
+                           Text="Финансы за последний месяц"
+                           FontWeight="SemiBold"/>
+                <WrapPanel Margin="0 0 0 0">
+
+                    <Border Effect="{StaticResource Shadow}" Background="White" MinWidth="300" Padding="10" Margin="5">
+                        <StackPanel TextBlock.TextAlignment="Center">
+                            <TextBlock Text="Чистая прибыль" Style="{StaticResource HeaderTwo}"
+                               Foreground="{StaticResource ForegroundBrush}"/>
+                            <TextBlock Text="{Binding Pribl, StringFormat={}{0:C2}, ConverterCulture=Ru, FallbackValue=Загрузка...}"
+                               FontSize="40"
+                               FontWeight="SemiBold"     
+                               Foreground="{StaticResource AccentBrush}"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Effect="{StaticResource Shadow}" Background="White" MinWidth="300" Padding="10" Margin="5">
+                        <StackPanel Grid.Column="1" 
+                                TextBlock.TextAlignment="Center">
+                            <TextBlock Text="Общий доход" Style="{StaticResource HeaderTwo}"
+                                   Foreground="{StaticResource ForegroundBrush}"/>
+                            <TextBlock Text="{Binding Income, StringFormat={}{0:C2}, ConverterCulture=Ru, FallbackValue=Загрузка...}"
+                                   FontWeight="SemiBold"
+                                FontSize="40"
+                                Foreground="LightSeaGreen"/>
+                        </StackPanel>
+                    </Border>
+                    <Border Effect="{StaticResource Shadow}" Background="White" MinWidth="300" Padding="10" Margin="5">
+                        <StackPanel Grid.Column="2"
+                                TextBlock.TextAlignment="Center">
+                            <TextBlock Text="Общий расход" Style="{StaticResource HeaderTwo}"
+                                   Foreground="{StaticResource ForegroundBrush}"/>
+                            <TextBlock Text="{Binding Cunsumption, StringFormat={}{0:C2}, ConverterCulture=Ru, FallbackValue=Загрузка...}"
+                                   FontSize="40"
+                                   FontWeight="SemiBold"
+                                   Foreground="IndianRed"/>
+                        </StackPanel>
+                    </Border>
+                </WrapPanel>
+            </StackPanel >
+
+            <StackPanel Margin="5" Visibility="{Binding BirthDayVisibility, Converter={StaticResource VisibilityConverter}}">
+                <TextBlock Style="{StaticResource HeaderTwo}"
+                           Text="Ближайшие дни рождения вашей группы"
+                           Foreground="{StaticResource ForegroundBrush}"
+                           FontWeight="SemiBold"/>
+                <Border Effect="{StaticResource Shadow}" Background="White" Padding="10" Margin="5">
+                    <StackPanel>
+                        <ListView ItemsSource="{Binding Childrens}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="ФИО">
+                                        <GridViewColumn.DisplayMemberBinding>
+                                            <MultiBinding StringFormat="{}{0} {1}. {2}.">
+                                                <Binding Path="Person.Lastname"/>
+                                                <Binding Path="Person.Firstname[0]"/>
+                                                <Binding Path="Person.Middlename[0]"/>
+                                            </MultiBinding>
+                                        </GridViewColumn.DisplayMemberBinding>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding Person.BirthDay, StringFormat={}{0:d MMMM yyyy}, ConverterCulture=Ru}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Margin="5" Visibility="{Binding LessonsVisibility, Converter={StaticResource VisibilityConverter}}">
+                <TextBlock Style="{StaticResource HeaderTwo}"
+                           Text="Ваши ближайшие занятия"
+                           Foreground="{StaticResource ForegroundBrush}"
+                           FontWeight="SemiBold"/>
+                
+                <Border Effect="{StaticResource Shadow}" Background="White" Padding="10" Margin="5">
+                    <StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Margin="5" Visibility="{Binding GroupLessonsVisibility, Converter={StaticResource VisibilityConverter}}">
+                <TextBlock Style="{StaticResource HeaderTwo}"
+                           Text="Ближайшие занятия вашей группы"
+                           Foreground="{StaticResource ForegroundBrush}"
+                           FontWeight="SemiBold"/>
+                <Border Effect="{StaticResource Shadow}" Background="White" Padding="10" Margin="5">
+                    <StackPanel>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+            
+        </WrapPanel>
+
+    </StackPanel>
+</Page>

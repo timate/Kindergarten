@@ -1,0 +1,366 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:b="http://schemas.microsoft.com/xaml/behaviors" 
+                    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/">
+
+    <!--#region Диалоговое окно-->
+
+    <Style TargetType="{x:Type Window}" x:Key="DialogStyle">
+        <Setter Property="ResizeMode" Value="NoResize"/>
+        <Setter Property="FontFamily" Value="{StaticResource OpenSans}"/>
+        <Setter Property="Background" Value="{StaticResource BackgroundBrush}"/>
+        <Setter Property="TextElement.Foreground" Value="{StaticResource ForegroundBrush}"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Window">
+                    <Grid Background="{TemplateBinding Background}">
+                        
+                        <!-- #region Разметка таблицы -->
+
+                        <!-- #endregion -->
+
+                        <!-- #region Загловок окна -->
+
+                        <Grid Grid.Row="0" VerticalAlignment="Top" Grid.Column="0" Height="25" Grid.ColumnSpan="2" Panel.ZIndex="1" Background="Transparent">
+                            <!-- #region Триггер для передвижения окна -->
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="MouseLeftButtonDown">
+                                    <b:InvokeCommandAction Command="{Binding WindowDragCommand}" 
+                                                           CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                            <!-- #endregion -->
+                            <!-- #region Разметка таблицы -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <!-- #endregion -->
+
+                            <!-- #region Кнопки окна -->
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <!-- #region  Кнопки управления окном-->
+                                <!-- #region Закрыть -->
+                                <Button Style="{StaticResource ControlButtons}" Command="{Binding CloseCommand}" Content="&#10005;" FontSize="14"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"/>
+                                <!-- #endregion -->
+                                <!-- #endregion -->
+                            </StackPanel>
+                            <!-- #endregion -->
+                        </Grid>
+
+                        <!-- #endregion -->
+
+                        <!-- #region Контент-->
+
+                        <ContentPresenter Grid.Row="0" Content="{TemplateBinding Content}"
+                                          HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+                        <!-- #endregion -->
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="Loader" TargetType="{x:Type Rectangle}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsAnimating, FallbackValue=False}" Value="True">
+                <DataTrigger.EnterActions>
+                    <BeginStoryboard Name="Sb">
+                        <Storyboard>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="Width"
+                                                           RepeatBehavior="Forever">
+                                <LinearDoubleKeyFrame Value="0" KeyTime="00:00:00"/>
+                                <LinearDoubleKeyFrame Value="200" KeyTime="00:00:01"/>
+                            </DoubleAnimationUsingKeyFrames>
+                            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin"
+                                                           RepeatBehavior="Forever">
+
+                                <LinearThicknessKeyFrame Value="0, 0, 0, 0" KeyTime="00:00:00"/>
+
+                                <LinearThicknessKeyFrame Value="350, 0, 0, 0 " KeyTime="00:00:01"/>
+
+                            </ThicknessAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </DataTrigger.EnterActions>
+                <DataTrigger.ExitActions>
+                    <RemoveStoryboard BeginStoryboardName="Sb"/>
+                </DataTrigger.ExitActions>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--#endregion-->
+    
+    <!--#region Обычное окно -->
+    
+    <Style TargetType="{x:Type Window}" x:Key="WindowStyle">
+        <Setter Property="FontFamily" Value="{StaticResource OpenSans}"/>
+        <Setter Property="Background" Value="{StaticResource BackgroundBrush}"/>
+        <Setter Property="TextElement.Foreground" Value="{StaticResource ForegroundBrush}"/>
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Window">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Grid.Resources>
+                            <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
+                        </Grid.Resources>
+                        
+                        <!-- #region Разметка таблицы -->
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="25"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- #endregion -->
+
+                        <!-- #region Меню -->
+
+
+                        <Grid Panel.ZIndex="90" Grid.RowSpan="2" Effect="{StaticResource Shadow}"
+                                MinWidth="50" HorizontalAlignment="Left" Background="{StaticResource AccentBrush}">
+
+                                <!-- #region Разметка -->
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <!-- #endregion -->
+
+                            <StackPanel>
+                                <!-- #region Кнопка меню -->
+                                    <Button Style="{StaticResource MenuButton}"
+                                            Command="{Binding MenuCommand}" CommandParameter="1"
+                                            >
+                                        <StackPanel Orientation="Horizontal" >
+                                            <svgc:SvgViewbox Stretch="Uniform" Source="/Assets/Images/Icons/Menu.svg" Width="15" Height="15"/>
+                                            <TextBlock Text="Меню" Margin="10 0 0 0" 
+                                                       Visibility="{Binding MenuOpen, Converter={StaticResource VisibilityConverter}}"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <!-- #endregion -->
+                                </StackPanel>
+
+                                <!-- #region Верхняя часть меню -->
+                                <StackPanel VerticalAlignment="Center" Grid.Row="1">
+
+                                    <!-- #region Кнопка назад -->
+                                    <Button Style="{StaticResource MenuButton}"                                             
+                                            Command="{Binding BackCommand}">
+                                        <StackPanel Orientation="Horizontal" >
+                                            <svgc:SvgViewbox Stretch="Uniform" Source="/Assets/Images/Icons/Back.svg" Width="15" Height="15"/>
+                                            <TextBlock Text="Назад"  Margin="10 0 0 0" 
+                                                       Visibility="{Binding MenuOpen, Converter={StaticResource VisibilityConverter}}"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <!-- #endregion -->
+
+                                    <!-- #region Кнопка главная-->
+                                    
+                                    <!--<RadioButton Style="{StaticResource MenuRadioButton}"
+                                            Command="{Binding MenuCommand}" CommandParameter="3">
+                                        <StackPanel Orientation="Horizontal" >
+                                            <svgc:SvgViewbox Stretch="Uniform" Source="/Assets/Images/Icons/Home.svg" Width="15" Height="15"/>
+                                            <TextBlock Text="Главная" Margin="10 0 0 0"
+                                                       Visibility="{Binding MenuOpen}"/>
+                                        </StackPanel>
+                                    </RadioButton>-->
+                                    
+                                    <!-- #endregion -->
+
+                                    <!-- #region Кнопка Расписание-->
+                                    <RadioButton Style="{StaticResource MenuRadioButton}"
+                                            Command="{Binding MenuCommand}" CommandParameter="4">
+                                        <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left">
+                                            <svgc:SvgViewbox Stretch="Uniform" Source="/Assets/Images/Icons/Calendar.svg" Width="15" Height="15"/>
+                                            <TextBlock Text="Расписание" Margin="10 0 0 0"
+                                                       Visibility="{Binding MenuOpen, Converter={StaticResource VisibilityConverter}}"/>
+                                        </StackPanel>
+                                    </RadioButton>
+                                    <!-- #endregion -->
+
+                                    <!-- #region Кнопка ученики-->
+                                    <RadioButton Style="{StaticResource MenuRadioButton}"
+                                            Command="{Binding MenuCommand}" CommandParameter="5">
+                                        <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left">
+                                            <svgc:SvgViewbox Stretch="Uniform" Source="/Assets/Images/Icons/Childrens.svg" Width="15" Height="15"/>
+                                            <TextBlock Text="Ученики" Margin="10 0 0 0" 
+                                                       Visibility="{Binding MenuOpen, Converter={StaticResource VisibilityConverter}}"/>
+                                        </StackPanel>
+                                    </RadioButton>
+                                    <!-- #endregion -->
+
+                                    <!-- #region Кнопка педагоги-->
+                                    <RadioButton Style="{StaticResource MenuRadioButton}"
+                                            Command="{Binding MenuCommand}" CommandParameter="6"
+                                                 Visibility="{Binding EmployeesVisibility, Converter={StaticResource VisibilityConverter}}">
+                                        <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left">
+                                            <svgc:SvgViewbox Stretch="Uniform" Source="/Assets/Images/Icons/Employees.svg" Width="15" Height="15"/>
+                                            <TextBlock Text="Педагоги" Margin="10 0 0 0" 
+                                                       Visibility="{Binding MenuOpen, Converter={StaticResource VisibilityConverter}}"
+                                                       />
+                                        </StackPanel>
+                                    </RadioButton>
+                                    <!-- #endregion -->
+
+                                    <!-- #region Кнопка посещения-->
+                                    <RadioButton Style="{StaticResource MenuRadioButton}"
+                                            Command="{Binding MenuCommand}" CommandParameter="7">
+                                        <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left">
+                                            <svgc:SvgViewbox Stretch="Uniform" Source="/Assets/Images/Icons/Visits.svg" Width="15" Height="15"/>
+                                            <TextBlock Text="Посещения" Margin="10 0 0 0" 
+                                                       Visibility="{Binding MenuOpen, Converter={StaticResource VisibilityConverter}}" 
+                                                       />
+                                        </StackPanel>
+                                    </RadioButton>
+                                    <!-- #endregion -->
+
+                                    <!-- #region Кнопка финансы-->
+                                    <RadioButton Style="{StaticResource MenuRadioButton}" 
+                                            Command="{Binding MenuCommand}" CommandParameter="9"
+                                                 Visibility="{Binding FinancesVisibility, Converter={StaticResource VisibilityConverter}}">
+                                        <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left">
+                                            <svgc:SvgViewbox Stretch="Uniform" Source="/Assets/Images/Icons/Finances.svg" Width="15" Height="15"/>
+                                            <TextBlock Text="Финансы"  Margin="10 0 0 0" 
+                                                       Visibility="{Binding MenuOpen, Converter={StaticResource VisibilityConverter}}" 
+                                                       />
+                                        </StackPanel>
+                                    </RadioButton>
+                                    <!-- #endregion -->
+
+                                    <!-- #region Кнопка аналитика-->
+                                    <RadioButton Style="{StaticResource MenuRadioButton}" 
+                                            Command="{Binding MenuCommand}" CommandParameter="10"
+                                                 Visibility="{Binding FinancesVisibility, Converter={StaticResource VisibilityConverter}}">
+                                        <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left">
+                                            <svgc:SvgViewbox Stretch="Uniform" Source="/Assets/Images/Icons/Analytics.svg" Width="15" Height="15"/>
+                                            <TextBlock Text="Аналитика"  Margin="10 0 0 0" 
+                                                       Visibility="{Binding MenuOpen, Converter={StaticResource VisibilityConverter}}" 
+                                                       />
+                                        </StackPanel>
+                                    </RadioButton>
+                                    <!-- #endregion -->
+
+                                </StackPanel>
+                                <!-- #endregion -->
+
+                                <!-- #region Нижняя чать меню -->
+                                <StackPanel VerticalAlignment="Bottom" Grid.Row="2">
+                                    
+                                    <!-- #region Кнопка выйти-->
+                                    <Button Style="{StaticResource MenuButton}" Command="{Binding SignOutCommand}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}">
+                                        <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left">
+                                            <svgc:SvgViewbox Stretch="Uniform" Source="/Assets/Images/Icons/SignOut.svg" Width="15" Height="15"/>
+                                            <TextBlock Text="Выйти" Margin="10 0 0 0" 
+                                                       Visibility="{Binding MenuOpen, Converter={StaticResource VisibilityConverter}}"/>
+                                        </StackPanel>
+                                    </Button>
+                                    <!-- #endregion -->
+                                    
+                                    <!-- #region Кнопка настройки-->
+                                    <RadioButton Style="{StaticResource MenuRadioButton}"
+                                             Command="{Binding MenuCommand}" CommandParameter="8"
+                                                 Visibility="{Binding SettingsVisibility, Converter={StaticResource VisibilityConverter}}">
+                                        <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left">
+                                            <svgc:SvgViewbox Stretch="Uniform" Source="/Assets/Images/Icons/Settings.svg" Width="15" Height="15"/>
+                                            <TextBlock Text="Настройки" Margin="10 0 0 0" 
+                                                       Visibility="{Binding MenuOpen, Converter={StaticResource VisibilityConverter}}"/>
+                                        </StackPanel>
+                                    </RadioButton>
+                                    <!-- #endregion -->
+                                
+                                </StackPanel>
+                                <!-- #endregion -->
+
+                            </Grid>
+
+                        
+                        <!-- #endregion -->
+
+                        <!-- #region Загловок окна -->
+
+                        <Border BorderThickness="0 0 0 1" Grid.ColumnSpan="2" Grid.Column="1" BorderBrush="{StaticResource BackgroundDarkBrush}"
+                                 Height="25" Panel.ZIndex="1" Background="Transparent">
+                            <!-- #region Триггер для передвижения окна -->
+
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="MouseLeftButtonDown">
+                                    <b:InvokeCommandAction Command="{Binding WindowDragCommand}" 
+                                                           CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+
+                            <!-- #endregion -->
+                            <Grid>
+                            
+                            
+                            
+                            <!-- #region Разметка таблицы -->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <!-- #endregion -->
+
+                                <!-- #region Кнопки окна -->
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <!-- #region Кнопка с инициалами пользователя -->
+                                <Button  Visibility="{Binding MenuVisible, FallbackValue=Visible}" Style="{StaticResource ControlButtons}" 
+                                         Content="{Binding UserName}" VerticalAlignment="Center" 
+                                         FontSize="14" Height="25" Command="{Binding CabinetCommand}"
+                                         ToolTip="Открыть личный кабинет" FontWeight="SemiBold" Foreground="{StaticResource ForegroundBrush}"/>
+                                <!-- #endregion -->
+                                <!-- #region Статус пользователя -->
+                                <Border Visibility="{Binding MenuVisible, FallbackValue=Visible}" BorderThickness="0.2 0" BorderBrush="LightGray" Padding="10 0" Background="{StaticResource AccentBrush}">
+                                    <TextBlock FontWeight="SemiBold" Text="{Binding Employee.Role.Name}" Foreground="{StaticResource BackgroundBrush}" VerticalAlignment="Center" FontSize="14"/>
+                                </Border>
+                                <!-- #endregion -->
+                                <!-- #region  Кнопки управления окном-->
+                                <!-- #region Скрыть -->
+                                <Button Visibility="{Binding MinimizeVisible, FallbackValue=Visible}" Style="{StaticResource ControlButtons}" Command="{Binding MinimizeCommand}" Content="&#8213;" FontSize="14"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"/>
+                                <!-- #endregion -->
+                                <!-- #region Развернуть -->
+                                <Button Visibility="{Binding MaximizeVisible, FallbackValue=Visible}" Style="{StaticResource ControlButtons}" Command="{Binding MaximizeCommand}" Content="&#9744;" FontSize="14"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"/>
+                                <!-- #endregion -->
+                                <!-- #region Закрыть -->
+                                <Button Visibility="{Binding CloseVisible, FallbackValue=Visible}"  Style="{StaticResource ControlButtons}" Command="{Binding CloseCommand}" Content="&#10005;" FontSize="14"
+                                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"/>
+                                <!-- #endregion -->
+                                <!-- #endregion -->
+                            </StackPanel>
+                            <!-- #endregion -->
+                        
+                        </Grid>
+                        </Border>
+
+                        <!-- #endregion -->
+
+                        <!-- #region Контент-->
+                        <ContentPresenter Name="Content" Content="{TemplateBinding Content}" 
+                                            Grid.Row="1" Grid.Column="1" Grid.RowSpan="2"/>
+
+                        <!-- #endregion -->
+                        
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!--#endregion-->
+    
+</ResourceDictionary>

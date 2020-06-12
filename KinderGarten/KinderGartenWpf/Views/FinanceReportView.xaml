@@ -1,0 +1,116 @@
+﻿<Page x:Class="KinderGartenWpf.Views.FinanceReportView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:io="clr-namespace:System.IO;assembly=System.IO.FileSystem" xmlns:converters="clr-namespace:KinderGartenWpf.Converters"
+      mc:Ignorable="d"
+      Name="Finance"
+      UseLayoutRounding="True"
+      DataContext="{Binding FinanceReportVm, Source={StaticResource ViewModelLocator}}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <DatePicker Tag="Начало периода"
+                        SelectedDate="{Binding StartDate}"/>
+                <DatePicker Tag="Конец периода" 
+                            SelectedDate="{Binding EndDate}"/>
+            <Button Content="Показать"
+                    Command="{Binding ViewCommand}"
+                    VerticalAlignment="Bottom"/>
+        </StackPanel>
+
+        <Button Content="Составить отчет в Excel"
+                HorizontalAlignment="Right"
+                Grid.Column="1"
+                Command="{Binding ExportCommand}"
+                VerticalAlignment="Bottom"/>
+
+        <WrapPanel Margin="0 20 0 0"
+            Grid.Row="1" Orientation="Horizontal"
+            VerticalAlignment="Top">
+
+            <Border Effect="{StaticResource Shadow}" Background="White" Padding="10" Width="300" Margin="0 0 10 0">
+                <StackPanel TextBlock.TextAlignment="Center">
+                    <TextBlock Text="Чистая прибыль" Style="{StaticResource HeaderTwo}"
+                               Foreground="{StaticResource ForegroundBrush}"/>
+                    <TextBlock Text="{Binding Pribl, StringFormat={}{0:C2}, ConverterCulture=Ru, FallbackValue=Загрузка...}"
+                               FontSize="40"
+                               FontWeight="SemiBold"     
+                               Foreground="{StaticResource AccentBrush}"/>
+                </StackPanel>
+            </Border>
+            <Border Effect="{StaticResource Shadow}" Background="White" Padding="10" Width="300" Margin="0 0 10 0">
+                <StackPanel Grid.Column="1" 
+                            TextBlock.TextAlignment="Center">
+                    <TextBlock Text="Общий доход" Style="{StaticResource HeaderTwo}"
+                               Foreground="{StaticResource ForegroundBrush}"/>
+                    <TextBlock Text="{Binding Income, StringFormat={}{0:C2}, ConverterCulture=Ru, FallbackValue=Загрузка...}"
+                               FontWeight="SemiBold"
+                            FontSize="40"
+                            Foreground="LightSeaGreen"/>
+                </StackPanel>
+            </Border>
+            <Border Effect="{StaticResource Shadow}" Background="White" Padding="10" Width="300" Margin="0 0 10 0">
+                <StackPanel Grid.Column="2"
+                            TextBlock.TextAlignment="Center">
+                    <TextBlock Text="Общий расход" Style="{StaticResource HeaderTwo}"
+                               Foreground="{StaticResource ForegroundBrush}"/>
+                    <TextBlock Text="{Binding Cunsumption, StringFormat={}{0:C2}, ConverterCulture=Ru, FallbackValue=Загрузка...}"
+                               FontSize="40"
+                               FontWeight="SemiBold"
+                               Foreground="IndianRed"/>
+                </StackPanel>
+            </Border>
+        </WrapPanel>
+
+        <Border Padding="10" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Top" Grid.Column="1" Background="White" Effect="{StaticResource Shadow}" Margin="0 20 0 0">
+            <StackPanel>
+                <TextBlock Text="Составленные отчеты"
+                           Style="{StaticResource HeaderTwo}"
+                           HorizontalAlignment="Left"
+                           Foreground="{StaticResource ForegroundBrush}"/>
+                <ItemsControl ItemsSource="{Binding Files}">
+                    <ItemsControl.Resources>
+                        <converters:FullNameToIconConverter x:Key="IconConverter"/>
+                        <DataTemplate DataType="{x:Type io:FileInfo}">
+                            <Button Command="{Binding DataContext.OpenReportCommand, ElementName=Finance}" CommandParameter="{Binding FullName}" Margin="0 5">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding FullName, Converter={StaticResource IconConverter}}"/>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.Resources>
+                </ItemsControl>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="2" Margin="0 9 10 0" Padding="0 5" Background="{StaticResource BackgroundBrush}" Panel.ZIndex="1" VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0 10 0 0">
+
+                <RadioButton Content="Доходы" Style="{DynamicResource Tab}"
+                            Command="{Binding ChangeTabCommand}"
+                            CommandParameter="1"
+                            IsChecked="True"/>
+                <RadioButton Content="Расходы" Style="{DynamicResource Tab}"
+                            Grid.Column="1" Command="{Binding ChangeTabCommand}"
+                            CommandParameter="2"/>
+            </StackPanel>
+        </Border>
+
+        <Frame Source="IncomeView.xaml"
+               Padding="10" Margin="-10 -10 0 0" Grid.Row="2" VerticalAlignment="Top"/>
+
+    </Grid>
+</Page>

@@ -1,0 +1,324 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>KinderGarten</AssemblyName>
+    <ApplicationIcon>Assets\Images\Logo\Logo.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Reports\**" />
+    <Compile Remove="ReportTemplates\**" />
+    <EmbeddedResource Remove="Reports\**" />
+    <EmbeddedResource Remove="ReportTemplates\**" />
+    <None Remove="Reports\**" />
+    <None Remove="ReportTemplates\**" />
+    <Page Remove="Reports\**" />
+    <Page Remove="ReportTemplates\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Fonts\OpenSans-Bold.ttf" />
+    <None Remove="Assets\Fonts\OpenSans-Light.ttf" />
+    <None Remove="Assets\Fonts\OpenSans-Regular.ttf" />
+    <None Remove="Assets\Images\Icons\Add.svg" />
+    <None Remove="Assets\Images\Icons\Analytics.svg" />
+    <None Remove="Assets\Images\Icons\Back.svg" />
+    <None Remove="Assets\Images\Icons\Calendar.svg" />
+    <None Remove="Assets\Images\Icons\Childrens.svg" />
+    <None Remove="Assets\Images\Icons\Edit.svg" />
+    <None Remove="Assets\Images\Icons\Employees.Svg" />
+    <None Remove="Assets\Images\Icons\Finances.svg" />
+    <None Remove="Assets\Images\Icons\Home.svg" />
+    <None Remove="Assets\Images\Icons\Lessons.svg" />
+    <None Remove="Assets\Images\Icons\Menu.svg" />
+    <None Remove="Assets\Images\Icons\Search.svg" />
+    <None Remove="Assets\Images\Icons\Settings.svg" />
+    <None Remove="Assets\Images\Icons\SignOut.svg" />
+    <None Remove="Assets\Images\Icons\Visits.svg" />
+    <None Remove="Assets\Images\Logo\Logo.ico" />
+    <None Remove="Assets\Images\NotFound.png" />
+    <None Remove="Assets\Images\SignPageView.png" />
+    <None Remove="Assets\Images\SignViewImage.jpg" />
+    <None Remove="Assets\Images\SplashScreen.png" />
+    <None Remove="ViewModels\Base\DialogViewModel.cs~RF59952f8.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Images\Icons\Add.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Images\Icons\Analytics.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Images\Icons\Back.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Images\Icons\Calendar.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Images\Icons\Childrens.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Images\Icons\Edit.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Images\Icons\Employees.Svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Images\Icons\Finances.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Images\Icons\Home.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Images\Icons\Lessons.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Images\Icons\Menu.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Images\Icons\Settings.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Images\Icons\SignOut.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Images\Icons\Visits.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ClosedXML.Report" Version="0.2.0" />
+    <PackageReference Include="CommonServiceLocator" Version="2.0.5" />
+    <PackageReference Include="ControlzEx" Version="4.2.2" />
+    <PackageReference Include="Microsoft.AspNet.Identity.Core" Version="2.2.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.3" />
+    <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.2.8" />
+    <PackageReference Include="SharpVectors" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Fonts\OpenSans-Bold.ttf" />
+    <Resource Include="Assets\Fonts\OpenSans-Light.ttf" />
+    <Resource Include="Assets\Fonts\OpenSans-Regular.ttf" />
+    <Resource Include="Assets\Images\Icons\Search.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Logo\Logo.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Logo\Logo.svg" />
+    <Resource Include="Assets\Images\NotFound.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\SignViewImage.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <SplashScreen Include="Assets\Images\SplashScreen.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="App.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\AnalyticsView.xaml.cs">
+      <DependentUpon>AnalyticsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\BidsView.xaml.cs">
+      <DependentUpon>BidsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\CabinetView.xaml.cs">
+      <DependentUpon>CabinetView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ChangeViews\ChildrenChangeView - Копировать.xaml.cs">
+      <DependentUpon>ChildrenChangeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ChangeViews\ChildrenChangeView.xaml.cs">
+      <DependentUpon>ChildrenChangeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ChangeViews\EmployeeAddView.xaml.cs">
+      <DependentUpon>EmployeeAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ChangeViews\EmployeeChangeView.xaml.cs">
+      <DependentUpon>EmployeeChangeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ChangeViews\SheduleChangeView.xaml.cs">
+      <DependentUpon>SheduleChangeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ChangeViews\SubscriptionChangeView.xaml.cs">
+      <DependentUpon>SubscriptionChangeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ChildrensView.xaml.cs">
+      <DependentUpon>ChildrensView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ChildrenView.xaml.cs">
+      <DependentUpon>ChildrenView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\EmployeesView.xaml.cs">
+      <DependentUpon>EmployeesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\FinanceReportView.xaml.cs">
+      <DependentUpon>FinanceReportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\FinancesView.xaml.cs">
+      <DependentUpon>FinancesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\IncomeView.xaml.cs">
+      <DependentUpon>IncomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ParentsView.xaml.cs">
+      <DependentUpon>ParentsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\ScheduleView.xaml.cs">
+      <DependentUpon>ScheduleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\RoomView.xaml.cs">
+      <DependentUpon>RoomView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\StatusView.xaml.cs">
+      <DependentUpon>StatusView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SubscriptionView.xaml.cs">
+      <DependentUpon>SubscriptionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\SuccessLessonsView.xaml.cs">
+      <DependentUpon>SuccessLessonsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\VisitsView.xaml.cs">
+      <DependentUpon>VisitsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Windows\ShellView.xaml.cs">
+      <DependentUpon>ShellView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Windows\SignView.xaml.cs">
+      <DependentUpon>SignView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Assets\Images\Logo.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Styles\Buttons.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Colors.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Controls.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Fonts.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Window.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AnalyticsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\BidsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\CabinetView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ChangeViews\ChildrenChangeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ChangeViews\EmployeeAddView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ChangeViews\EmployeeChangeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ChangeViews\SheduleChangeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ChangeViews\SubscriptionChangeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ChildrensView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ChildrenView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\EmployeesView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\FinanceReportView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\FinancesView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\IncomeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\MainView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ParentsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ScheduleView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\RoomView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\SettingsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\StatusView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\SubscriptionView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\SuccessLessonsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\VisitsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Windows\ShellView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Windows\SignView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,78 @@
+﻿<Page x:Class="KinderGartenWpf.Views.VisitsReportView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:KinderGartenWpf.Views" xmlns:converters="clr-namespace:KinderGartenWpf.Converters" xmlns:io="clr-namespace:System.IO;assembly=System.IO.FileSystem"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="VisitsReportView"
+      Name="VistisRep"
+      DataContext="{Binding VisitsReportVM ,Source={StaticResource ViewModelLocator}}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal">
+            <DatePicker Tag="Начало периода"
+                        SelectedDate="{Binding Start}"/>
+            <DatePicker Tag="Конец периода" 
+                            SelectedDate="{Binding End}"/>
+            <ComboBox Tag="Группа" ItemsSource="{Binding Groups}"
+                      SelectedItem="{Binding SelectedGroup}"
+                      DisplayMemberPath="Name"/>
+            <Button Content="Показать"
+                    Command="{Binding ViewCommand}"
+                    VerticalAlignment="Bottom"/>
+        </StackPanel>
+
+        <Button Content="Составить отчет в Excel"
+                HorizontalAlignment="Right"
+                Grid.Column="1"
+                Command="{Binding ExportCommand}"
+                VerticalAlignment="Bottom"/>
+
+        <Border Padding="10" Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Top" Grid.Column="1" Background="White" Effect="{StaticResource Shadow}" Margin="0 20 0 0">
+            <StackPanel>
+                <TextBlock Text="Составленные отчеты"
+                           Style="{StaticResource HeaderTwo}"
+                           HorizontalAlignment="Left"
+                           Foreground="{StaticResource ForegroundBrush}"/>
+                <ItemsControl ItemsSource="{Binding Files}">
+                    <ItemsControl.Resources>
+                        <converters:FullNameToIconConverter x:Key="IconConverter"/>
+                        <DataTemplate DataType="{x:Type io:FileInfo}">
+                            <Button Command="{Binding DataContext.OpenReportCommand, ElementName=VistisRep}" CommandParameter="{Binding FullName}" Margin="0 5">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{Binding FullName, Converter={StaticResource IconConverter}}"/>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </ItemsControl.Resources>
+                </ItemsControl>
+            </StackPanel>
+        </Border>
+
+        <ListView ItemsSource="{Binding Visits}" Grid.Row="1" Background="White" Effect="{StaticResource Shadow}" Padding="10" Margin="5 20 10 5">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding Lastname}"/>
+                    <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Firstname}"/>
+                    <GridViewColumn Header="Отчество" DisplayMemberBinding="{Binding Middlename}"/>
+                    <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding Status}"/>
+                    <GridViewColumn Header="Количество" DisplayMemberBinding="{Binding CountUnvisit}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+    </Grid>
+</Page>

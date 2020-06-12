@@ -1,0 +1,77 @@
+﻿<Window x:Class="KinderGartenWpf.Views.ChangeViews.SubscriptionChangeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors" xmlns:controlzex="urn:controlzex"
+        mc:Ignorable="d"
+        Title="Оформление абонимента"
+        Height="400" Width="350"
+        WindowStyle="None"
+        Style="{StaticResource DialogStyle}"
+        AllowsTransparency="True"
+        DataContext="{Binding SubscriptionChangeVM, Source={StaticResource ViewModelLocator}}">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome/>
+    </WindowChrome.WindowChrome>
+
+    <b:Interaction.Behaviors>
+        <controlzex:WindowChromeBehavior/>
+    </b:Interaction.Behaviors>
+    
+    <Grid Margin="0 25 0 0">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ScrollViewer>
+            <StackPanel Margin="10">
+                <TextBlock Text="Оформление абонимента"
+                           Style="{StaticResource HeaderOne}"
+                           Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
+
+
+                <ComboBox ItemsSource="{Binding Subscriptions}"
+                          Tag="Шаблон абонемента"
+                            SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                            DisplayMemberPath="Name"/>
+                <ComboBox ItemsSource="{Binding PaymentMethods}"
+                          Tag="Способ оплаты"
+                          SelectedItem="{Binding SelectedMethod, Mode=TwoWay}"
+                          DisplayMemberPath="Name"/>
+                <StackPanel Visibility="{Binding DetailVisibility}">
+                    <TextBlock Text="{Binding SelectedItem.Name, StringFormat='Название: {0, 16}'}"
+                               Margin="5" Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
+                    <TextBlock Margin="5" Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis">
+                        <TextBlock.Text>
+                            <MultiBinding StringFormat="Педагог: {0, 22} {1} {2}">
+                                <Binding Path="SelectedItem.Employee.Person.Lastname"/>
+                                <Binding Path="SelectedItem.Employee.Person.Firstname"/>
+                                <Binding Path="SelectedItem.Employee.Person.Middlename"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock Text="{Binding SelectedItem.Start, StringFormat='Действилен с: {0, 23:dd MMMM yyyy года}', ConverterCulture=RU-ru}"
+                               Margin="5" Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
+                    <TextBlock Text="{Binding SelectedItem.End, StringFormat='Действилен до: {0, 20:dd MMMM yyyy года}', ConverterCulture=RU-ru}"
+                               Margin="5" Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
+                    <TextBlock Text="{Binding Price, StringFormat='Стоимость:{0, 21:C2}', ConverterCulture=RU-ru}"
+                               Margin="5" Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Border Effect="{StaticResource Shadow}" Grid.Row="1"
+                Background="{StaticResource BackgroundBrush}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Добавить"
+                        Command="{Binding AddCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"
+                        Visibility="{Binding AddVisibility}"/>
+            </StackPanel>
+        </Border>
+        
+    </Grid>
+</Window>

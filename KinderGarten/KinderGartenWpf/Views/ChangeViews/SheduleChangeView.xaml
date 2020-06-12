@@ -1,0 +1,117 @@
+﻿<Window x:Class="KinderGartenWpf.Views.Dialog.SheduleChangeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors" xmlns:controlzex="urn:controlzex" xmlns:converters="clr-namespace:KinderGartenWpf.Converters"
+        mc:Ignorable="d"
+         AllowsTransparency="True"
+      WindowStyle="None"
+      Style="{StaticResource DialogStyle}"
+        Title="{Binding Title}"
+      Width="350"
+      Height="600"
+      DataContext="{Binding SheduleChangeVM, Source={StaticResource ViewModelLocator}}" WindowStartupLocation="CenterScreen">
+    <WindowChrome.WindowChrome>
+        <WindowChrome/>
+    </WindowChrome.WindowChrome>
+    <b:Interaction.Behaviors>
+        <controlzex:WindowChromeBehavior/>
+    </b:Interaction.Behaviors>
+    <Grid Margin="0 25 0 0">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            
+            <StackPanel VerticalAlignment="Center" Margin="10">
+                <TextBlock Text="{Binding Title}" Style="{StaticResource HeaderOne}"/>
+
+                <TextBlock Text="Общее" Style="{StaticResource HeaderTwo}"/>
+
+                <StackPanel>
+                    <TextBlock Text="Тип: " Margin="5 5 5 5"/>
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton IsChecked="True" Content="Обязательный" Margin="5"/>
+                        <RadioButton IsChecked="{Binding DopLesson, Mode=TwoWay}" Content="Дополнительный" Margin="5"/>
+                    </StackPanel>
+                </StackPanel>
+
+                    <TextBox Tag="Название" Text="{Binding Lesson.Name}"
+                             Visibility="{Binding EmployeeVisibility}"
+                             PreviewTextInput="OnlyLetters"/>
+
+                    <ComboBox Tag="Педагог" Visibility="{Binding EmployeeVisibility}" ItemsSource="{Binding Employees}" SelectedItem="{Binding Lesson.Employee}" Margin="5 0 5 5">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <Run Text="{Binding Person.Lastname}"/>
+                                    <Run Text="{Binding Person.Firstname}"/>
+                                    <Run Text="{Binding Person.Middlename}"/>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                    <ComboBox Tag="Группа"
+                              ItemsSource="{Binding Groups}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding Lesson.Group}"/>
+
+                    <ComboBox Tag="Помещение"
+                              ItemsSource="{Binding Rooms}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding Lesson.Room}"/>
+
+                    <ComboBox Tag="Абонеменет"
+                              ItemsSource="{Binding Subscriptions}"
+                              DisplayMemberPath="Name"
+                              SelectedItem="{Binding Lesson.Tariff}"
+                              Visibility="{Binding SubscriptionsVisibility}"/>
+
+                <TextBlock Text="Время" Style="{StaticResource HeaderTwo}"/>
+
+                <StackPanel>
+                    <StackPanel.Resources>
+                        <converters:DayConventer x:Key="conventer"/>
+                    </StackPanel.Resources>
+                    <ComboBox Tag="День недели" Text="День недели"
+                              SelectedIndex="{Binding Lesson.DayOfWeek, Mode=TwoWay, Converter={StaticResource conventer}}">
+                        <ComboBoxItem>Понедельник</ComboBoxItem>
+                        <ComboBoxItem>Вторник</ComboBoxItem>
+                        <ComboBoxItem>Среда</ComboBoxItem>
+                        <ComboBoxItem>Четверг</ComboBoxItem>
+                        <ComboBoxItem>Пятница</ComboBoxItem>
+                        <ComboBoxItem>Суббота</ComboBoxItem>
+                    </ComboBox>
+
+                    <DatePicker Tag="В период с" SelectedDate="{Binding Lesson.DateStart}"
+                                Visibility="{Binding EmployeeVisibility}"/>
+                    <DatePicker Tag="по" SelectedDate="{Binding Lesson.DateEnd}" 
+                                Visibility="{Binding EmployeeVisibility}"/>
+
+                </StackPanel>
+
+                    <TextBox Tag="Номер занятия" Text="{Binding Lesson.LessonNumber}" 
+                             PreviewTextInput="OnlyDigits" MaxLength="1"/>
+            </StackPanel>
+        </ScrollViewer>
+        <Border Grid.Row="1" Effect="{StaticResource Shadow}" Background="{StaticResource BackgroundBrush}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Добавить"
+                        Visibility="{Binding AddVisibility}"
+                        Command="{Binding AddCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"/>
+                <Button Content="Изменить"
+                        Visibility="{Binding ChangeVisibility}"
+                        Command="{Binding ChangeCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"/>
+                <Button Content="Удалить"
+                        Visibility="{Binding ChangeVisibility}"
+                        Command="{Binding RemoveCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

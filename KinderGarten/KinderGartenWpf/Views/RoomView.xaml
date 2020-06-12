@@ -1,0 +1,207 @@
+﻿<Page x:Class="KinderGartenWpf.Views.RoomView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d" 
+       d:DesignWidth="1200"
+      Title="ChildrenView"
+      UseLayoutRounding="True"
+      DataContext="{Binding RoomVM, Source={StaticResource ViewModelLocator}}">
+    <WrapPanel HorizontalAlignment="Center">
+        <StackPanel Margin="10" Background="White" Effect="{StaticResource Shadow}">
+            <TextBlock Text="Время" VerticalAlignment="Center" 
+                        Style="{StaticResource HeaderTwo}" Margin="16 16 16 0"/>
+            <Grid Margin="10 5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Начало рабочего дня" Margin="5"/>
+                <TextBox Text="{Binding Times.WorkingHourStart, Mode=TwoWay}" Grid.Column="1"/>
+
+                <TextBlock Grid.Row="1" Text="Конец рабочего дня"/>
+                <TextBox Text="{Binding Times.WorkingHourEnd, Mode=TwoWay}" Grid.Row="1" Grid.Column="1"/>
+
+                <TextBlock Grid.Row="2" Text="Длительность занятии" Margin="5"/>
+                <TextBox Text="{Binding Times.LessonDuration, Mode=TwoWay}" Grid.Row="2" Grid.Column="1"/>
+
+                <TextBlock Grid.Row="3" Text="Длительность перемен" Margin="5 5 5 0"/>
+                <TextBox Text="{Binding Times.TurnDuration, Mode=TwoWay}" Grid.Row="3" Grid.Column="1"/>
+
+                <TextBlock Grid.Row="4" Text="Обед после" Margin="5 5 5 0"/>
+                <TextBox Text="{Binding Times.DinnerAfter, Mode=TwoWay}" Grid.Row="4" Grid.Column="1"/>
+
+                <TextBlock Grid.Row="5" Text="Длительность обеда" Margin="5 5 5 0"/>
+                <TextBox Text="{Binding Times.DinnerDuration, Mode=TwoWay}" Grid.Row="5" Grid.Column="1"/>
+
+                <TextBlock Grid.Row="6" Text="Длительность послеобеденной перемены" Margin="5 5 5 0"/>
+                <TextBox Text="{Binding Times.AfterDinnerTurnDuration, Mode=TwoWay}" Grid.Row="6" Grid.Column="1"/>
+
+                <Button Grid.Row="7" Grid.Column="1" Content="Сохранить" Margin="5 20 5 5"
+                        HorizontalAlignment="Right"
+                        Command="{Binding SaveCommand}"/>
+            </Grid>
+        </StackPanel>
+        <StackPanel Margin="10" Background="White" Effect="{StaticResource Shadow}" Grid.Column="2" MinWidth="345">
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Помещения" VerticalAlignment="Center" 
+                           Style="{StaticResource HeaderTwo}"/>
+                <StackPanel Grid.Column="1" 
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <Button Content="Удалить" Visibility="{Binding BtnVisibility}"
+                            Command="{Binding RoomRemoveCommand}"/>
+                    <Button Content="Изменить" Visibility="{Binding BtnVisibility}"
+                            Command="{Binding RoomChangeCommand}"/>
+                    <Button Content="Добавить" 
+                            Command="{Binding RoomAddCommand}"/>
+                </StackPanel>
+            </Grid>
+
+            <StackPanel Margin="16 5">
+                <ListView ItemsSource="{Binding Rooms}"
+                          SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Name}" Width="100"/>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </StackPanel>
+        </StackPanel>
+        
+        <StackPanel Margin="10" Background="White" Effect="{StaticResource Shadow}" Grid.Row="1">
+            <Grid Margin="5" MinWidth="345">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Роли родителей" VerticalAlignment="Center" 
+                           Style="{StaticResource HeaderTwo}"/>
+                <StackPanel Grid.Column="1" 
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <Button Content="Удалить" Visibility="{Binding Btn3Visibility}"
+                            Command="{Binding ParentRoleRemoveCommand}"/>
+                    <Button Content="Изменить" Visibility="{Binding Btn3Visibility}"
+                            Command="{Binding ParentRoleChangeCommand}"/>
+                    <Button Content="Добавить" 
+                            Command="{Binding ParentRoleAddCommand}"/>
+                </StackPanel>
+            </Grid>
+
+            <StackPanel Margin="16 5">
+                <ListView ItemsSource="{Binding ParentRoles}"
+                          SelectedItem="{Binding SelectedParent, Mode=TwoWay}">
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Name}" Width="100"/>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <TextBlock Text="Нет родительских ролей"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0 50"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Margin="10" Background="White" Effect="{StaticResource Shadow}" Grid.Row="1" Grid.Column="1">
+            <Grid Margin="5" MinWidth="345">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Способы оплаты" VerticalAlignment="Center" 
+                           Style="{StaticResource HeaderTwo}"/>
+                <StackPanel Grid.Column="1" 
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <Button Content="Удалить" Visibility="{Binding Btn1Visibility}"
+                            Command="{Binding MethodRemoveCommand}"/>
+                    <Button Content="Изменить" Visibility="{Binding Btn1Visibility}"
+                            Command="{Binding MethodChangeCommand}"/>
+                    <Button Content="Добавить" 
+                            Command="{Binding MethodAddCommand}"/>
+                </StackPanel>
+            </Grid>
+
+            <StackPanel Margin="16 5">
+                <ListView ItemsSource="{Binding PaymentMethods}"
+                          SelectedItem="{Binding SelectedMethod, Mode=TwoWay}">
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Name}" Width="100"/>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <TextBlock Text="Нет способов оплаты"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0 50"/>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Margin="10" Background="White" Effect="{StaticResource Shadow}" Grid.Row="1" Grid.Column="2">
+            <Grid Margin="5" MinWidth="345">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Статусы посещения" VerticalAlignment="Center" 
+                           Style="{StaticResource HeaderTwo}"/>
+                <StackPanel Grid.Column="1" 
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <Button Content="Удалить" Visibility="{Binding Btn4Visibility}"
+                            Command="{Binding VisitRemoveCommand}"/>
+                    <Button Content="Изменить" Visibility="{Binding Btn4Visibility}"
+                            Command="{Binding VisitChangeCommand}"/>
+                    <Button Content="Добавить" 
+                            Command="{Binding VisitAddCommand}"/>
+                </StackPanel>
+            </Grid>
+
+            <StackPanel Margin="16 5">
+                <ListView ItemsSource="{Binding VisitStatuses}"
+                          SelectedItem="{Binding SelectedVisit, Mode=TwoWay}">
+                    <ListView.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Name}" Width="100"/>
+                            </GridView.Columns>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <TextBlock Text="Нет статусов посещения"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0 50"/>
+            </StackPanel>
+        </StackPanel>
+        
+    </WrapPanel>
+</Page>

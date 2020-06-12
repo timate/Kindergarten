@@ -1,0 +1,95 @@
+﻿<Window x:Class="KinderGartenWpf.Views.ChangeViews.SalaryChangeView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:controlzex="urn:controlzex" 
+      mc:Ignorable="d"
+      Width="350"
+      Height="400"
+      WindowStyle="None"
+        Title="Выплата заработной платы"
+      AllowsTransparency="True"
+      Style="{StaticResource DialogStyle}"
+      DataContext="{Binding SalaryChangeVM, Source={StaticResource ViewModelLocator}}">
+    <WindowChrome.WindowChrome>
+        <WindowChrome/>
+    </WindowChrome.WindowChrome>
+
+    <b:Interaction.Behaviors>
+        <controlzex:WindowChromeBehavior/>
+    </b:Interaction.Behaviors>
+
+    <Grid Margin="0 25 0 0">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+            <StackPanel Margin="10">
+
+                <TextBlock Text="{Binding Title}"
+                   Style="{StaticResource HeaderOne}"
+                           Foreground="{StaticResource ForegroundBrush}"/>
+
+                <ComboBox Tag="Сотрудник"
+                          ItemsSource="{Binding Employees}"
+                          SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}"
+                          SelectedIndex="0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <Run Text="{Binding Person.Lastname}"/>
+                                <Run Text="{Binding Person.Firstname}"/>
+                                <Run Text="{Binding Person.Middlename}"/>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <TextBlock Text="Тип ставки" Margin="5 5 5 0"
+                           FontWeight="SemiBold"
+                           Foreground="{StaticResource ForegroundBrush}"/>
+                <StackPanel Orientation="Horizontal" Margin="5 5 5 5">
+                    <RadioButton IsChecked="True" Command="{Binding BidChangeCommand}"
+                                 CommandParameter="1"
+                                 Content="Одинарный" Margin="5"
+                                 Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
+                    <RadioButton Command="{Binding BidChangeCommand}"
+                                 CommandParameter="2" Content="Полуторный" Margin="5"
+                                 Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
+                    <RadioButton Command="{Binding BidChangeCommand}"
+                                 CommandParameter="3" Content="Двойной" Margin="5"
+                                 Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
+                </StackPanel>
+
+                <TextBox Tag="Премиальные" MaxLength="5"
+                         Text="{Binding Premial, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, FallbackValue=0}">
+                </TextBox>
+
+                <ComboBox Tag="Метод оплаты"
+                          ItemsSource="{Binding PaymentMethods}"
+                          SelectedItem="{Binding SelectedPaymentMethod, Mode=TwoWay}"
+                          DisplayMemberPath="Name"/>
+
+                <TextBlock Foreground="{StaticResource ForegroundBrush}"
+                           FontWeight="SemiBold" Margin="5">
+                    <Run Text="Итого: " FontSize="14"/>
+                    <Run Text="{Binding Amount, Mode=OneWay, StringFormat='{}{0:C2}', ConverterCulture=Ru}"
+                         Foreground="{StaticResource AccentBrush}" FontSize="16"/>
+                </TextBlock>
+            </StackPanel>
+        </ScrollViewer>
+        <Border Grid.Row="1" Background="{StaticResource BackgroundBrush}" Effect="{StaticResource Shadow}">
+            <StackPanel Grid.Row="1" Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <Button Content="Выплатить"
+                    Command="{Binding AddCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"
+                    Visibility="{Binding AddVisibility}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

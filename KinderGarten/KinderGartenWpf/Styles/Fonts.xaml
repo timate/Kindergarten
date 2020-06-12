@@ -1,0 +1,50 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <FontFamily x:Key="OpenSans" >pack://application:,,,/Assets/Fonts/#Open Sans</FontFamily>
+    <FontFamily x:Key="OpenSansBold" >pack://application:,,,/Assets/Fonts/#Open Sans Bold</FontFamily>
+    <FontFamily x:Key="OpenSansLight" >pack://application:,,,/Assets/Fonts/#Open Sans Light</FontFamily>
+
+    <FontFamily x:Key="NotoSans">pack://application:,,,./Fonts/#Open Sans</FontFamily>
+
+    <Style TargetType="{x:Type TextBlock}">
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="HeaderOne">
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="Margin" Value="0 10"/>
+    </Style>
+    <Style TargetType="TextBlock" x:Key="HeaderTwo">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Margin" Value="0 5"/>
+    </Style>
+
+
+    <!--#region Кнопки управления-->
+    <Style TargetType="{x:Type Button}" x:Key="ControlButtons">
+        <Style.Setters>
+            <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True"/>
+            <Setter Property="Padding" Value="15 0 15 0"/>
+            <Setter Property="Background" Value="Transparent"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}">
+                            <ContentPresenter Focusable="False" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource BackgroundDarkBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--#endregion-->
+
+
+
+</ResourceDictionary>

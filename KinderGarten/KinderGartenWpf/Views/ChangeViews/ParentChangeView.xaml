@@ -1,0 +1,91 @@
+﻿<Window x:Class="KinderGartenWpf.Views.ChangeViews.ParentChangeView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:conventers="clr-namespace:KinderGartenWpf.Converters"
+      xmlns:controlzex="urn:controlzex"
+      mc:Ignorable="d"
+      Width="350"
+      Height="600"
+      WindowStyle="None"
+        Title="{Binding Title}"
+      AllowsTransparency="True"
+      Style="{StaticResource DialogStyle}"
+      DataContext="{Binding ParentChangeVM, Source={StaticResource ViewModelLocator}}">
+    <WindowChrome.WindowChrome>
+        <WindowChrome/>
+    </WindowChrome.WindowChrome>
+
+    <b:Interaction.Behaviors>
+        <controlzex:WindowChromeBehavior/>
+    </b:Interaction.Behaviors>
+
+    <Grid Margin="0 25 0 0">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+            <StackPanel Margin="10">
+
+                <TextBlock Text="{Binding Title}"
+                   Style="{StaticResource HeaderOne}"/>
+
+                <TextBlock Text="Общие данные" 
+                   Style="{StaticResource HeaderTwo}"/>
+
+                <TextBlock Text="Фамилия" Margin="5 5 5 0"/>
+                <TextBox Margin="5 0 5 5" PreviewTextInput="OnlyLetters"
+                         Text="{Binding Parent.Person.Lastname, Mode=TwoWay}"/>
+                <TextBlock Text="Имя" Margin="5 5 5 0"/>
+                <TextBox Margin="5 0 5 5" PreviewTextInput="OnlyLetters"
+                         Text="{Binding Parent.Person.Firstname, Mode=TwoWay}"/>
+                <TextBlock Text="Отчество" Margin="5 5 5 0"/>
+                <TextBox Margin="5 0 5 5" PreviewTextInput="OnlyLetters"
+                         Text="{Binding Parent.Person.Middlename, Mode=TwoWay}"/>
+                <TextBlock Text="Адрес" Margin="5 5 5 0"/>
+                <TextBox Margin="5 0 5 5"
+                         Text="{Binding Parent.Person.Address, Mode=TwoWay}"/>
+                <TextBlock Text="Дата рождения" Margin="5 5 5 0"/>
+                <DatePicker Margin="5 0 5 5"
+                            SelectedDate="{Binding Parent.Person.BirthDay, Mode=TwoWay}"/>
+                <TextBlock Text="Пол" Margin="5 5 5 0"/>
+                <StackPanel Orientation="Horizontal" Margin="5 0 5 5">
+                    <RadioButton IsChecked="{Binding Parent.Person.Gender, Mode=TwoWay, FallbackValue=false}" Content="Мужской" Margin="5"/>
+                    <RadioButton IsChecked="True" Content="Женский" Margin="5"/>
+                </StackPanel>
+                <TextBlock Text="Телефон" Margin="5 5 5 0"/>
+                <TextBox Margin="5 0 5 5" PreviewTextInput="OnlyDigits"
+                         Text="{Binding Parent.Person.Phone, Mode=TwoWay}"/>
+                
+                <TextBlock Text="Роль" Margin="5 5 5 0"/>
+                <ComboBox ItemsSource="{Binding ParentRoles}"
+                          SelectedItem="{Binding Parent.ParentRole}"/>
+
+            </StackPanel>
+        </ScrollViewer>
+        <Border Grid.Row="1" Background="{StaticResource BackgroundBrush}" Effect="{StaticResource Shadow}">
+            <StackPanel Grid.Row="1" Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <StackPanel.Resources>
+                    <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
+                </StackPanel.Resources>
+                <Button Content="Добавить"
+                    Command="{Binding AddCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"
+                    Visibility="{Binding AddVisibility, Converter={StaticResource VisibilityConverter}}"/>
+                <Button Content="Изменить"
+                    Command="{Binding ChangeCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"
+                    Visibility="{Binding ChangeVisibility, Converter={StaticResource VisibilityConverter}}"/>
+                <Button Content="Удалить"
+                    Command="{Binding RemoveCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"
+                    Visibility="{Binding ChangeVisibility, Converter={StaticResource VisibilityConverter}}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

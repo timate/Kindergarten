@@ -1,0 +1,108 @@
+﻿<Page x:Class="KinderGartenWpf.Views.ChildrensView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:conventers="clr-namespace:KinderGartenWpf.Converters" xmlns:svgc="http://sharpvectors.codeplex.com/svgc/" xmlns:objects="clr-namespace:KinderGartenWpf.Models.Objects"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ChildrenView"
+      UseLayoutRounding="True"
+      DataContext="{Binding ChildrensVM, Source={StaticResource ViewModelLocator}}">
+    <StackPanel>
+        <StackPanel.Resources>
+            <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
+        </StackPanel.Resources>
+        <TextBlock Text="Дети" Style="{StaticResource HeaderOne}" Margin="5"/>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal">
+
+                <TextBox Tag="Поиск" Width="200"
+                            Text="{Binding Search, Mode=TwoWay}"/>
+
+                <ComboBox SelectedItem="{Binding SelectedGroup, Mode=TwoWay, FallbackValue={x:Null}}"
+                          Tag="Группа">
+                    <ComboBox.Resources>
+                        <CollectionViewSource x:Key="Groups" Source="{Binding Groups}"/>
+                        <DataTemplate DataType="{x:Type objects:Group}">
+                            <TextBlock Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </ComboBox.Resources>
+                    <ComboBox.ItemsSource>
+                        <CompositeCollection>
+                            <objects:Group Name="Все"/>
+                            <CollectionContainer Collection="{Binding Source={StaticResource Groups}}"/>
+                        </CompositeCollection>
+                    </ComboBox.ItemsSource>
+                </ComboBox>
+
+                <Button Command="{Binding SearchCommand}"
+                        VerticalAlignment="Bottom" ToolTip="Найти">
+                    <svgc:SvgViewbox Stretch="UniformToFill" Source="/Assets/Images/Icons/Search.svg" Width="15" Height="15" Focusable="False"/>
+                </Button>
+
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Bottom">
+                <Button HorizontalAlignment="Right" 
+                        Content="Изменить"
+                        Visibility="{Binding ChangeBtnVisibility, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}"
+                    Command="{Binding ChildrenChange}"/>
+                <Button HorizontalAlignment="Right" 
+                        Content="Добавить ребенка"
+                        Command="{Binding ChildrenAdd}"
+                        Visibility="{Binding AddBtnVisibility, Converter={StaticResource VisibilityConverter}}"/>
+                <Button HorizontalAlignment="Right" 
+                        Content="Добавить участника группы"
+                        Command="{Binding AddGroupChildren}"
+                        Visibility="{Binding AddGroupBtnVisibility, Converter={StaticResource VisibilityConverter}}"/>
+            </StackPanel>
+        </Grid>
+
+        <Border Background="White" Effect="{StaticResource Shadow}" Padding="10" Margin="0 20 0 0">
+            <StackPanel>
+            <ListView Name="ListView"
+                        ItemsSource="{Binding Childrens}"
+                        SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                <b:Interaction.Triggers>
+                    <b:EventTrigger EventName="MouseDoubleClick">
+                        <b:InvokeCommandAction Command="{Binding GridDoubleCommand}"/>
+                    </b:EventTrigger>
+                </b:Interaction.Triggers>
+                <ListView.Resources>
+                    <conventers:GenderConverter x:Key="GenderConverter"/>
+                </ListView.Resources>
+                <ListView.View>
+                    <GridView>
+                        <GridView.Columns>
+                            <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding Path=Person.Lastname}" Width="100"/>
+                            <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Path=Person.Firstname}" Width="100"/>
+                            <GridViewColumn Header="Отчество" DisplayMemberBinding="{Binding Path=Person.Middlename}" Width="100"/>
+                                <GridViewColumn Header="Телефон" DisplayMemberBinding="{Binding Path=Person.Phone, StringFormat={}{0}}" Width="100"/>
+                            <GridViewColumn Header="Дата рождения" DisplayMemberBinding="{Binding Path=Person.BirthDay, StringFormat={}{0:d MMMM yyyy года}, ConverterCulture=RU-ru}" Width="150"/>
+                            <GridViewColumn Header="Пол" DisplayMemberBinding="{Binding Path=Person.Gender, Converter={StaticResource GenderConverter}}" Width="100"/>
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+                <StackPanel Margin="0 100" Visibility="{Binding IsChildrenEmpty, Converter={StaticResource VisibilityConverter}}">
+                    <Image Source="/Assets/Images/NotFound.png" Stretch="Uniform" Width="150" Height="150"/>
+                    <TextBlock Text="Данных о детях не найдено"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Style="{StaticResource HeaderTwo}"
+                           FontWeight="SemiBold"
+                           Foreground="{StaticResource ForegroundBrush}"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+    </StackPanel>
+</Page>

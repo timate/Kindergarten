@@ -1,0 +1,50 @@
+﻿<Page x:Class="KinderGartenWpf.Views.ParentsView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ParentsView"
+      UseLayoutRounding="True"
+      DataContext="{Binding ParentsVM, Source={StaticResource ViewModelLocator}}">
+    <Page.Resources>
+        <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
+    </Page.Resources>
+    <StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Изменить родителя"
+                    Visibility="{Binding ChangeBtnVisibility, Converter={StaticResource VisibilityConverter}}"
+                    Command="{Binding ChangeCommand}"/>
+            <Button Content="Добавить родителя"
+                    Command="{Binding AddCommand}"
+                    Visibility="{Binding AddBtnVisibility, Converter={StaticResource VisibilityConverter}}"/>
+        </StackPanel>
+        <Border Background="White" Padding="10" Effect="{StaticResource Shadow}">
+            <StackPanel>
+                <ListView ItemsSource="{Binding Parents}"
+                          SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding Path=Person.Lastname}" Width="100"/>
+                            <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding Path=Person.Firstname}" Width="100"/>
+                            <GridViewColumn Header="Отчество" DisplayMemberBinding="{Binding Path=Person.Middlename}" Width="100"/>
+                            <GridViewColumn Header="Телефон" DisplayMemberBinding="{Binding Path=Person.Phone}" Width="100"/>
+                            <GridViewColumn Header="Роль" DisplayMemberBinding="{Binding Path=ParentRole.Name}" Width="100"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <StackPanel Margin="0 100" Visibility="{Binding GridEmptyVisibility}">
+                    <Image Source="/Assets/Images/NotFound.png" Stretch="Uniform" Width="150" Height="150"/>
+                    <TextBlock Text="Родителей не найдено"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Style="{StaticResource HeaderTwo}"
+                           FontWeight="SemiBold"
+                           Foreground="{StaticResource ForegroundBrush}"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </StackPanel>
+    
+</Page>

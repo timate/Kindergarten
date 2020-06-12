@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\ChangeViews\DialogView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\ChangeViews\ParentChangeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\ChangeViews\SalaryChangeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\ChangeViews\SubscriptionTemplateChangeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\GroupsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\SubscriptionTemplates.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\VisitsReportView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Windows\MessagesView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Styles\Buttons.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Colors.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Controls.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\DefaultStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Fonts.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\NeumorphismStyle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Styles\Window.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AnalyticsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\BidsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\CabinetView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ChangeViews\ChildrenChangeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ChangeViews\DialogView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ChangeViews\EmployeeAddView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ChangeViews\EmployeeChangeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ChangeViews\ParentChangeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ChangeViews\SalaryChangeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ChangeViews\SheduleChangeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ChangeViews\SubscriptionChangeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ChangeViews\SubscriptionTemplateChangeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ChildrensView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ChildrenView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\EmployeesView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\FinanceReportView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\FinancesView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\GroupsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\IncomeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\MainView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ParentsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ScheduleView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\RoomView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\SettingsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\StatusView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\SubscriptionTemplates.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\SubscriptionView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\SuccessLessonsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\VisitsReportView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\VisitsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Windows\MessagesView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Windows\ShellView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Windows\SignView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

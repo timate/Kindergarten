@@ -1,0 +1,41 @@
+﻿<Window x:Class="KinderGartenWpf.Views.Windows.MessagesView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Уведомление" 
+        MinHeight="100" MaxHeight="250" Height="115" Width="300"
+        Background="Transparent"
+        BorderThickness="0"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        ShowInTaskbar="False"
+        Topmost="True">
+    <WindowChrome.WindowChrome>
+        <WindowChrome/>
+    </WindowChrome.WindowChrome>
+    <Border Margin="10" Padding="5" Name="Message" 
+            Background="RoyalBlue" UseLayoutRounding="True">
+        <Grid Background="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Уведомление" FontSize="14"
+                       Foreground="{Binding Foreground, ElementName=Content}"/>
+            <TextBlock Name="Content" TextWrapping="Wrap" Grid.Row="1"
+                       Foreground="{Binding Message.Foreground1, FallbackValue=GhostWhite}"
+                       Text="{Binding Message.Content, FallbackValue=Уведомление}"
+                       FontSize="14"/>
+            <Button Name="Close" Grid.Column="1" 
+                    Foreground="White" Style="{StaticResource ControlButtons}"
+                    BorderThickness="0" Margin="0" Padding="4" Height="21"
+                    Content="&#10005;" Click="Button_Click" FontSize="14"/>
+        </Grid>
+    </Border>
+</Window>

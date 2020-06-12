@@ -1,0 +1,130 @@
+﻿<Window x:Class="KinderGartenWpf.Views.EmployeeAddView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:controlzex="urn:controlzex"
+      mc:Ignorable="d" 
+      Width="700"
+      Height="600"
+      WindowStyle="None"
+        Title="{Binding Title}"
+      Style="{StaticResource DialogStyle}"
+      AllowsTransparency="True"
+      DataContext="{Binding EmployeeAddVM, Source={StaticResource ViewModelLocator}}">
+    <WindowChrome.WindowChrome>
+        <WindowChrome/>
+    </WindowChrome.WindowChrome>
+    <b:Interaction.Behaviors>
+        <controlzex:WindowChromeBehavior/>
+    </b:Interaction.Behaviors>
+    <Grid Margin="0 25 0 0">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.ColumnSpan="2" Text="{Binding Title}" Style="{StaticResource HeaderOne}"
+                           Margin="5" Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
+                <StackPanel Margin="10 0" Grid.Row="1">
+                    <TextBlock Text="Общие данные" Style="{StaticResource HeaderTwo}"
+                               FontWeight="SemiBold"/>
+
+                    <TextBlock Text="Фотография" Margin="5 5 5 0" Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
+                    <StackPanel Orientation="Vertical" Margin="5 5 5 5">
+                        <Image Stretch="UniformToFill" Width="100" Height="100">
+                            <Image.Clip>
+                                <EllipseGeometry Center="50, 50" RadiusX="50" RadiusY="50"/>
+                            </Image.Clip>
+                            <Image.Source>
+                                <Binding Path="Employee.Person.Image" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.TargetNullValue>
+                                        <ImageSource>/Assets/Images/NotFound.png</ImageSource>
+                                    </Binding.TargetNullValue>
+                                </Binding>
+                            </Image.Source>
+                        </Image>
+                        <Button Content="Изменить" VerticalAlignment="Center"
+                                Command="{Binding PhotoChangeCommand}"/>
+                    </StackPanel>
+
+                    <TextBox Tag="Фамилия" Text="{Binding Employee.Person.Lastname, Mode=TwoWay}" Margin="5"
+                             PreviewTextInput="OnlyLetters"/>
+
+                    <TextBox Tag="Имя" Text="{Binding Employee.Person.Firstname, Mode=TwoWay}" Margin="5"
+                             PreviewTextInput="OnlyLetters"/>
+
+                    <TextBox Tag="Отчетсво" Text="{Binding Employee.Person.Middlename, Mode=TwoWay}" Margin="5"
+                             PreviewTextInput="OnlyLetters"/>
+                
+                    <TextBox Tag="Адрес" Text="{Binding Employee.Person.Address, Mode=TwoWay}" Margin="5"/>
+                
+                    <DatePicker Tag="Дата рождения" SelectedDate="{Binding Employee.Person.BirthDay, Mode=TwoWay}"/>
+                
+                    <TextBox Tag="Почта" Text="{Binding Employee.Person.Email, Mode=TwoWay}"/>
+                
+                    <TextBlock Text="Пол" Margin="5 5 5 0"
+                               Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
+                    <StackPanel Orientation="Horizontal" Margin="5 0 5 5">
+                        <RadioButton IsChecked="{Binding Employee.Person.Gender}" Content="Мужской" Margin="5"
+                                     Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
+                        <RadioButton IsChecked="True" Content="Женский" Margin="5"
+                                     Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
+                    </StackPanel>
+                
+                    <TextBox Tag="Телефон" Text="{Binding Employee.Person.Phone, Mode=TwoWay}" Margin="5"
+                             PreviewTextInput="OnlyDigits"/>
+
+                    <ComboBox Tag="Должность" ItemsSource="{Binding Roles}"
+                              SelectedItem="{Binding Employee.Role}" Margin="5"
+                              DisplayMemberPath="Name"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Grid.Row="1">
+                    <TextBlock Text="Документ" Style="{StaticResource HeaderTwo}"
+                               Foreground="{StaticResource ForegroundBrush}"
+                               FontWeight="SemiBold"/>
+
+                    <TextBlock Text="Тип" Margin="5 5 5 0"
+                               Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
+                    <StackPanel Orientation="Horizontal" Margin="5 0 5 5">
+                        <RadioButton IsChecked="{Binding Document.Type}" Content="Паспорт" Margin="5"
+                                     Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
+                        <RadioButton IsChecked="True" Content="Другой" Margin="5"
+                                     Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
+                    </StackPanel>
+                    <TextBox Tag="Номер" Margin="5"
+                             Text="{Binding Employee.Document.Number, Mode=TwoWay}"
+                             PreviewTextInput="OnlyDigits"/>
+                    <TextBox Tag="Информация" Margin="5"
+                             Text="{Binding Employee.Document.Information, Mode=TwoWay}"/>
+                    <TextBox Tag="Комментарий" Margin="5 5 5 10"
+                             Text="{Binding Employee.Document.Comment, Mode=TwoWay}" TextWrapping="Wrap"
+                             MaxLength="250" Height="150"/>
+                    <TextBlock Text="Логин и пароль" Style="{StaticResource HeaderTwo}"
+                               Foreground="{StaticResource ForegroundBrush}" FontWeight="SemiBold"/>
+                    <TextBox Tag="Логин" Text="{Binding Login}" Margin="5"/>
+                    <TextBox Tag="Пароль" Text="{Binding Password}" Margin="5"/>
+                    <TextBox Tag="Подтверждение" Text="{Binding ConfirmPassword}" Margin="5"/>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+        <Border Effect="{StaticResource Shadow}" Grid.Row="1" Background="{StaticResource BackgroundBrush}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Добавить"
+                    Command="{Binding AddCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"
+                    Visibility="{Binding AddVisibility}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

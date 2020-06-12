@@ -1,0 +1,69 @@
+﻿<Window x:Class="KinderGartenWpf.Views.ChangeViews.SubscriptionTemplateChangeView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors" xmlns:controlzex="urn:controlzex"
+        mc:Ignorable="d"
+         AllowsTransparency="True"
+      WindowStyle="None"
+        Title="{Binding Title}"
+      Style="{StaticResource DialogStyle}"
+      Width="350"
+      Height="500"
+      DataContext="{Binding TemplateChangeVM, Source={StaticResource ViewModelLocator}}" WindowStartupLocation="CenterScreen">
+    <WindowChrome.WindowChrome>
+        <WindowChrome/>
+    </WindowChrome.WindowChrome>
+    <b:Interaction.Behaviors>
+        <controlzex:WindowChromeBehavior/>
+    </b:Interaction.Behaviors>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+
+            <StackPanel VerticalAlignment="Center" Margin="10">
+                <TextBlock Text="{Binding Title}" Style="{StaticResource HeaderOne}"/>
+
+                 <TextBox Tag="Название" Text="{Binding Subscription.Name}" Margin="5 0 5 5"
+                         PreviewTextInput="OnlyLetters"/>
+                <ComboBox Tag="Воспитатель" ItemsSource="{Binding Employees}" SelectedItem="{Binding Subscription.Employee}" Margin="5 0 5 5">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                    <Run Text="{Binding Role.Name, StringFormat={}{0}:}"/>
+                                    <Run Text="{Binding Person.Lastname}"/>
+                                    <Run Text="{Binding Person.Firstname}"/>
+                                    <Run Text="{Binding Person.Middlename}"/>
+                                </TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <DatePicker Tag="Действует с" SelectedDate="{Binding Subscription.Start}"/>
+                <DatePicker Tag="Действует до" SelectedDate="{Binding Subscription.End}"/>
+                <TextBox Tag="Количество часов" Text="{Binding Subscription.HoursCount}"/>
+                <TextBox Tag="Стоимость" Text="{Binding Subscription.Amount}"/>
+
+            </StackPanel>
+        </ScrollViewer>
+        <Border Grid.Row="1" Effect="{StaticResource Shadow}" Background="{StaticResource BackgroundBrush}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="Добавить"
+                        Visibility="{Binding AddVisibility}"
+                        Command="{Binding AddCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"/>
+                <Button Content="Изменить"
+                        Visibility="{Binding ChangeVisibility}"
+                        Command="{Binding ChangeCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"/>
+                <Button Content="Удалить"
+                        Visibility="{Binding ChangeVisibility}"
+                        Command="{Binding RemoveCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type Window}}}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
